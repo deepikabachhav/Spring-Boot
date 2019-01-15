@@ -1,0 +1,23 @@
+package com.cg.restservice.FirstSpringBootApp.service;
+
+import java.util.List;
+
+import com.cg.restservice.FirstSpringBootApp.pojo.Employee;
+import com.cg.restservice.FirstSpringBootApp.repository.EmployeeRepository;
+import com.cg.restservice.FirstSpringBootApp.service.EmployeeService;
+
+public class EmployeeServiceImpl implements EmployeeService{
+	
+	private EmployeeRepository repository;
+	@Override
+	public void addNewEmployee(Employee employee) {
+		repository.save(employee);
+		
+	}
+
+	@Override
+	public List<Employee> getAllEmployees() {
+		return repository.findAll();
+	}
+
+}

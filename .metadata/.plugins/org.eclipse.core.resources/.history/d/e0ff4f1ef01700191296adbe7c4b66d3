@@ -1,0 +1,5 @@
+package com.cg.restservice.repository;
+
+public class EmployeeRepository {
+
+}
