@@ -9,8 +9,8 @@
 <body>
 <h1>${message}</h1>
 <form action="deposit" method="get">
-	Enter Account Number: <input name="accountNumber"/><br/>
-	Enter Amount : <input name="amount"/><br/>
+	Enter Account Number: <input name="accountNumber"/><br/><br/>
+	Enter Amount : <input name="amount"/><br/><br/>
 	<input type="submit"/>
 </form>
 </body>

@@ -17,6 +17,6 @@ public interface AccountService {
 
 	void closeAccount(int accountNumber);
 
-	void updateBalnce(int accountNumber, double balance);
+	void updateBalnce(Account account);
 
 }

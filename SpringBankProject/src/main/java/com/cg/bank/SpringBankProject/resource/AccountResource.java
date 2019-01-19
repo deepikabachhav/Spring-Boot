@@ -45,7 +45,7 @@ public class AccountResource {
 	}
 
 	@PostMapping
-	public void addNewAccount(@RequestBody SavingsAccount account) {
+	public void addNewAccount(@RequestBody Account account) {
 		accountService.addNewAccount(account);
 
 	}
@@ -54,13 +54,38 @@ public class AccountResource {
 	public void deleteAccount(@PathVariable int accountNumber) {
 		accountService.closeAccount(accountNumber);
 	}
-
-	@PutMapping("/{accountNumber}")
-	public void updateAccountBalance(@PathVariable int accountNumber, @RequestParam Double balance) {
-		accountService.updateBalnce(accountNumber, balance);
-
+	
+	/*
+	 * @GetMapping("/{accountNumber}") public ResponseEntity<Double>
+	 * getCurrentBalance (@PathVariable int accountNumber){ Optional<Account>
+	 * optionalAccount=accountService.getAccountById(accountNumber); double
+	 * currentBalance=optionalAccount.get().getCurrentBalance();
+	 * if(optionalAccount.get()==null) { return new
+	 * ResponseEntity<>(null,HttpStatus.NOT_FOUND); } return new
+	 * ResponseEntity<>(currentBalance,HttpStatus.OK); }
+	 */
+	@GetMapping("/{accountNumber}/balance")
+	public ResponseEntity<Double> getAccountBalance(@PathVariable int accountNumber) {
+		Optional<Account> optionalAccount=accountService.getAccountById(accountNumber);
+ 		Account account=optionalAccount.get();
+		if(account==null) {
+			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(account.getCurrentBalance(),HttpStatus.OK);		
 	}
 
+	@PutMapping("/{accountNumber}")
+	public ResponseEntity<Double> updateAccountBalance(@PathVariable Integer accountNumber, @RequestParam Double currentBalance ) {
+		Optional<Account> optionalAccount=accountService.getAccountById(accountNumber);
+		Account account=optionalAccount.get();
+		if(account==null) {
+			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+		}
+		account.setCurrentBalance(currentBalance);
+		accountService.addNewAccount(account);
+		return new ResponseEntity<>(account.getCurrentBalance(),HttpStatus.OK);		
+	}
 	/*
 	 * @PutMapping("/{accountId}") public void
 	 * updateAccount(@PathVariable("accountId") int accountNumber, @RequestParam

@@ -47,10 +47,7 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public void updateBalnce(int accountNumber, double currentBalance) {
-		Optional<Account> optionalAccount =accountRepository.findById(accountNumber);
-		Account account = (Account)optionalAccount.get();
-		account.setCurrentBalance(currentBalance);
+	public void updateBalnce(Account account) {
 		accountRepository.save(account);
 	}
 }

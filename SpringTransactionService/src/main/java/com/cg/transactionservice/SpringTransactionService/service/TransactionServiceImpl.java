@@ -24,7 +24,7 @@ public class TransactionServiceImpl implements TransactionService {
 		Transaction transaction=new Transaction();
 		transaction.setAccountNumber(accountNumber);
 		transaction.setAmount(amount);
-		currentBalance=transaction.getCurrentBalance()+amount;
+		currentBalance+=amount;
 		transaction.setCurrentBalance(currentBalance);
 		transaction.setTransactionDate(LocalDateTime .now());
 		transaction.setTransactionType(TransactionType.DEPOSIT);

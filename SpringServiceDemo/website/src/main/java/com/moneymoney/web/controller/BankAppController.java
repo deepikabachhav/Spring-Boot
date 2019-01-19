@@ -19,10 +19,11 @@ public class BankAppController {
 	public String depositForm() {
 		return "DepositForm";
 	}
+	
 	@RequestMapping("/deposit")
 	public String deposit(@ModelAttribute Transaction transaction,
 			Model model) {
-		restTemplate.postForEntity("http://localhost:9090/transactions", 
+		restTemplate.postForEntity("http://localhost:8899/transactions", 
 				transaction, null);
 		model.addAttribute("message","Success!");
 		return "DepositForm";
