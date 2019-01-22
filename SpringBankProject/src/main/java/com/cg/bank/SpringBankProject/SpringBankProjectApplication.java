@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 
 import com.cg.bank.SpringBankProject.entity.CurrentAccount;
 import com.cg.bank.SpringBankProject.entity.SavingsAccount;
-import com.cg.bank.SpringBankProject.repository.AccountRepository;
 import com.cg.bank.SpringBankProject.service.AccountService;
 
 @SpringBootApplication

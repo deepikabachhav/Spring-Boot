@@ -55,15 +55,6 @@ public class AccountResource {
 		accountService.closeAccount(accountNumber);
 	}
 	
-	/*
-	 * @GetMapping("/{accountNumber}") public ResponseEntity<Double>
-	 * getCurrentBalance (@PathVariable int accountNumber){ Optional<Account>
-	 * optionalAccount=accountService.getAccountById(accountNumber); double
-	 * currentBalance=optionalAccount.get().getCurrentBalance();
-	 * if(optionalAccount.get()==null) { return new
-	 * ResponseEntity<>(null,HttpStatus.NOT_FOUND); } return new
-	 * ResponseEntity<>(currentBalance,HttpStatus.OK); }
-	 */
 	@GetMapping("/{accountNumber}/balance")
 	public ResponseEntity<Double> getAccountBalance(@PathVariable int accountNumber) {
 		Optional<Account> optionalAccount=accountService.getAccountById(accountNumber);
