@@ -1,14 +1,12 @@
 package com.cg.transactionservice.SpringTransactionService;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
-
-import com.cg.transactionservice.SpringTransactionService.entity.Transaction;
-import com.cg.transactionservice.SpringTransactionService.repo.TransactionRepository;
-
+@EnableDiscoveryClient
 @SpringBootApplication
 public class SpringTransactionServiceApplication {
 
@@ -17,6 +15,7 @@ public class SpringTransactionServiceApplication {
 	}
 	
 	@Bean
+	@LoadBalanced
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}

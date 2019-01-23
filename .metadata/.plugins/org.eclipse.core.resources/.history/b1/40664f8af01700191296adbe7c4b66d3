@@ -1,5 +1,0 @@
-package com.cg.restservice.service;
-
-public interface EmployeeServiceImpl {
-
-}

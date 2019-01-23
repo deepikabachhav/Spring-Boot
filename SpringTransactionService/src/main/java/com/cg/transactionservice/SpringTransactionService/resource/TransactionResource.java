@@ -29,20 +29,20 @@ public class TransactionResource {
 	
 	@PostMapping
 	public ResponseEntity<Transaction> deposit(@RequestBody Transaction transaction){
-		ResponseEntity<Double> entity=restTemplate.getForEntity("http://localhost:8898/accounts/"+transaction.getAccountNumber()+ "/balance",Double.class);
+		ResponseEntity<Double> entity=restTemplate.getForEntity("http://account-Service/accounts/"+transaction.getAccountNumber()+ "/balance",Double.class);
 		Double currentBalance=entity.getBody();
 		Double updateBalance=transactionService.deposit(transaction.getAccountNumber(), transaction.getTransactionDetails(), currentBalance, transaction.getAmount());
-		restTemplate.put("http://localhost:8898/accounts/"+transaction.getAccountNumber()+"?currentBalance="+updateBalance,null);
+		restTemplate.put("http://account-Service/accounts/"+transaction.getAccountNumber()+"?currentBalance="+updateBalance,null);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 		
 	}
 	
 	@PostMapping("/withdraw")
 	public ResponseEntity<Transaction> withdraw(@RequestBody Transaction transaction){
-		ResponseEntity<Double> entity=restTemplate.getForEntity("http://localhost:8898/accounts/"+transaction.getAccountNumber()+ "/balance",Double.class);
+		ResponseEntity<Double> entity=restTemplate.getForEntity("http://account-Service/accounts/"+transaction.getAccountNumber()+ "/balance",Double.class);
 		Double currentBalance=entity.getBody();
 		Double updateBalance=transactionService.withdraw(transaction.getAccountNumber(), transaction.getTransactionDetails(), currentBalance, transaction.getAmount());
-		restTemplate.put("http://localhost:8898/accounts/"+transaction.getAccountNumber()+"?currentBalance="+updateBalance,null);
+		restTemplate.put("http://account-Service/accounts/"+transaction.getAccountNumber()+"?currentBalance="+updateBalance,null);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 		
 	}
@@ -51,16 +51,16 @@ public class TransactionResource {
 	public ResponseEntity<Transaction> fundTransfer(@RequestBody Transaction senderTransaction,@RequestParam Integer receiverAccountNmber){
 		Double[] updatedBalance=new Double[2];
 		Transaction receiverTransaction=new Transaction();
-		ResponseEntity<Double> entityOne=restTemplate.getForEntity("http://localhost:8898/accounts/"+senderTransaction.getAccountNumber()+ "/balance",Double.class);
+		ResponseEntity<Double> entityOne=restTemplate.getForEntity("http://account-Service/accounts/"+senderTransaction.getAccountNumber()+ "/balance",Double.class);
 		Double sendercurrentBalance=entityOne.getBody();
-		ResponseEntity<Double> entityTwo=restTemplate.getForEntity("http://localhost:8898/accounts/"+receiverAccountNmber+ "/balance",Double.class);
+		ResponseEntity<Double> entityTwo=restTemplate.getForEntity("http://account-Service/accounts/"+receiverAccountNmber+ "/balance",Double.class);
 		Double receivercurrentBalance=entityTwo.getBody();
 		receiverTransaction.setCurrentBalance(receivercurrentBalance);
 		senderTransaction.setCurrentBalance(sendercurrentBalance);
 		receiverTransaction.setAccountNumber(receiverAccountNmber);
 		updatedBalance=transactionService.fundTransfer(senderTransaction, receiverTransaction);
-		restTemplate.put("http://localhost:8898/accounts/"+senderTransaction.getAccountNumber()+"?currentBalance="+updatedBalance[0],null);
-		restTemplate.put("http://localhost:8898/accounts/"+receiverTransaction.getAccountNumber()+"?currentBalance="+updatedBalance[1],null);
+		restTemplate.put("http://account-Service/accounts/"+senderTransaction.getAccountNumber()+"?currentBalance="+updatedBalance[0],null);
+		restTemplate.put("http://account-Service/accounts/"+receiverTransaction.getAccountNumber()+"?currentBalance="+updatedBalance[1],null);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	

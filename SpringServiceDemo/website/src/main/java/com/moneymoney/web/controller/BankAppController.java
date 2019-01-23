@@ -31,7 +31,7 @@ public class BankAppController {
 	@RequestMapping("/deposit")
 	public String deposit(@ModelAttribute Transaction transaction,
 			Model model) {
-		restTemplate.postForEntity("http://localhost:8899/transactions", 
+		restTemplate.postForEntity("http://transaction-Service/transactions", 
 				transaction, null);
 		model.addAttribute("message","Success!");
 		return "DepositForm";
@@ -45,7 +45,7 @@ public class BankAppController {
 	@RequestMapping("/withdrawAmount")
 	public String withdraw(@ModelAttribute Transaction transaction,
 			Model model) {
-		restTemplate.postForEntity("http://localhost:8899/transactions/withdraw", 
+		restTemplate.postForEntity("http://transaction-Service/transactions/withdraw", 
 				transaction, null);
 		model.addAttribute("message","Success!");
 		return "WithdrawForm";
@@ -62,7 +62,7 @@ public class BankAppController {
 		transaction.setAccountNumber(senderAccountNumber);
 		transaction.setAmount(amount);
 		
-		restTemplate.postForEntity("http://localhost:8899/transactions/fundTransfer?receiverAccountNmber="+receiverAccountNumber, 
+		restTemplate.postForEntity("http://transaction-Service/transactions/fundTransfer?receiverAccountNmber="+receiverAccountNumber, 
 				transaction, null);
 		model.addAttribute("message","Success!");
 		return "FundTransferForm";
@@ -74,7 +74,7 @@ public class BankAppController {
 		int currentOffset = offset==0?1:offset;
 		Link previous = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(BankAppController.class).getStatement(currentOffset-currentSize, currentSize)).withRel("previous");
 		Link next = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(BankAppController.class).getStatement(currentOffset+currentSize, currentSize)).withRel("next");
-		CurrentDataSet currentDataSet = restTemplate.getForObject("http://localhost:8899/transactions", CurrentDataSet.class);
+		CurrentDataSet currentDataSet = restTemplate.getForObject("http://transaction-Service/transactions", CurrentDataSet.class);
 		List<Transaction> transactionList = currentDataSet.getTransactions();
 		List<Transaction> transactions = new ArrayList<Transaction>();
 		for(int value=currentOffset-1; value<currentOffset+currentSize-1; value++) {
